@@ -1,6 +1,6 @@
 # Pandemic Treaty PABS Simulation Tool
 
-## 👉 [Open the simulation tool](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/app/)  ·  [Read the proposal](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/proposal/)
+## 👉 [Open the simulation tool](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/app/)  ·  [Minister’s brief](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/minister/)  ·  [Read the proposal](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/proposal/)
 
 **Website:** https://sserenity22.github.io/pandemic-treaty-pabs-simulation/
 *(Opens in your browser — no download, no sign-in. The files below are the source code behind these pages.)*
@@ -14,6 +14,7 @@ Simulates how the proposed terms of the WHO Pandemic Agreement’s Pathogen Acce
 | | |
 |---|---|
 | **Simulation tool** | [Open it](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/app/) (source: [`app/`](app/)) — build a package on the seven key issues; see whether the Parties could sign it, what it delivers in four outbreak scenarios, and which trades close the gap. Runs entirely in the browser; nothing is sent to a server. |
+| **Minister’s brief (test)** | [Open it](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/minister/) (source: [`minister/`](minister/)) — choose a country and a deal; get a one-page cheat sheet on whether a COVID 2.0 would leave the country better or worse off than 2020–23. Pakistan is the worked example. Deaths-avoided figures are indicative and not yet calibrated. |
 | **Proposal** | [Read it](https://sserenity22.github.io/pandemic-treaty-pabs-simulation/proposal/) (source: [`proposal/`](proposal/)) — 12 slides: the problem, the tool, privacy, engineering, timeline, budget (planning estimates), governance, the ask. |
 
 ## Status and limits
