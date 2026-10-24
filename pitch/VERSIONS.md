@@ -34,6 +34,7 @@ The share page ([index.html](index.html)) plays Version 3. Versions 1 and 2 are 
 
 - Combines Version 1's photographs, framing and closing page with Version 2's FLUX clips and demo.
 - Narration avoids "signable", "veto" and "trade"; results are described as meeting "the model's agreement criteria".
+- Uses WHO terminology: "WHO Pandemic Agreement" and "PABS annex"; the tool is named "Pandemic Agreement PABS Simulation Tool", part of PABS Reset.
 - QR code and button lead to the demo request form.
 
-Image credits and AI labels appear in each video. Illustrative model, not validated. Independent project, not affiliated with or endorsed by WHO.
+Image credits and AI labels appear in each video. Versions 1 and 2 are kept as they were made, including the earlier name "Pandemic Treaty". Illustrative model, not validated. Part of PABS Reset, an independent project, not affiliated with or endorsed by WHO.
