@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img">
+<defs><style>
+.serif{font-family:Georgia,'Times New Roman',serif;font-weight:400} .sans{font-family:Avenir,'Arial',sans-serif;font-weight:400} .bold{font-family:Avenir,'Arial',sans-serif;font-weight:600} text{fill:#142e3b} .muted{fill:#52666b} .teal{fill:#266b69}
+</style><linearGradient id="wash" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#edf1e9"/><stop offset="1" stop-color="#f5f5ef"/></linearGradient></defs>
+<rect width="1920" height="1080" fill="#f5f5ef"/><g transform="translate(100 78)"><rect width="48" height="48" rx="13" fill="#266b69"/><path d="M12 25h24M24 13v24" fill="none" stroke="#f5f5ef" stroke-width="2.2"/><circle cx="24" cy="25" r="8" fill="none" stroke="#f5f5ef" stroke-width="2.2"/><text class="bold" x="68" y="32" font-size="30" letter-spacing="2">PABS SIMULATION</text></g><text class="sans muted" x="1820" y="110" text-anchor="end" font-size="25">The core bargain</text><line x1="100" y1="158" x2="1820" y2="158" stroke="#d8dfd8" stroke-width="1.5"/>
+<rect x="100" y="219" width="826" height="550" rx="28" fill="#e9efea"/>
+<rect x="954" y="219" width="866" height="550" rx="28" fill="#e8eeec"/>
+<text class="bold teal" x="148" y="280" font-size="24" letter-spacing="2.5">01 · PATHOGEN ACCESS</text>
+<text class="bold teal" x="1002" y="280" font-size="24" letter-spacing="2.5">02 · BENEFIT SHARING</text>
+<g transform="translate(174 329)" fill="none" stroke="#266b69" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M25 0h68v19H25zM34 19v105a25 25 0 0 0 50 0V19M34 92h50"/><path d="M50 111h18M50 129h18"/>
+<path d="M160 7c85 35-28 98 57 136M217 7c-85 35 28 98-57 136M169 19h39M173 43h31M171 69h35M174 96h30M169 125h39" stroke-width="4"/>
+</g>
+<g transform="translate(1030 329)" fill="none" stroke="#266b69" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M20 1h92v27H20zM31 28v20L12 68v80a17 17 0 0 0 17 17h75a17 17 0 0 0 17-17V68l-20-20V28M12 93h109M50 117h34M67 100v34"/>
+<path d="M189 21l51 24v50c0 35-25 55-51 70-26-15-51-35-51-70V45zM163 91l19 19 36-41" stroke-width="4"/>
+</g>
+<text class="serif" font-size="67" x="148" y="605">Share the</text><text class="serif" font-size="67" x="148" y="687">science.</text>
+<text class="serif" font-size="67" x="1002" y="605">Share the</text><text class="serif" font-size="67" x="1002" y="687">protection.</text>
+<circle cx="940" cy="490" r="42" fill="#f5f5ef" stroke="#d8dfd8" stroke-width="2"/><path d="M920 490h38m-13-13 13 13-13 13" fill="none" stroke="#266b69" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="sans muted" x="960" y="849" text-anchor="middle" font-size="31">Pathogens &amp; sequence information <tspan fill="#a78752" y="849">→</tspan> Fair access to vaccines, tests &amp; treatments</text>
+<line x1="100" y1="938" x2="1820" y2="938" stroke="#d8dfd8" stroke-width="1.5"/><text class="sans muted" x="100" y="976" font-size="23">Independent project · No WHO affiliation or endorsement</text><text class="sans muted" x="1820" y="979" font-size="23" text-anchor="end">02 / 06</text></svg>
