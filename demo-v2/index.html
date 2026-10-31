@@ -1,51 +1,613 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light"><meta name="description" content="An interactive ministerial briefing concept for the PABS Simulation. Fictional figures for design review.">
-<title>PABS Simulation — Ministerial demo</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23142e3b'/%3E%3Ctext x='12' y='29' font-family='Georgia' font-size='30' fill='white'%3EP%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="demo.css"><script type="module" src="demo.mjs"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PABS Annex Workspace — Ministerial Briefing, Clause Simulator &amp; “Today’s Text” Gemini Copilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./demo.css">
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to briefing</a>
-<aside class="sidebar" aria-label="Application navigation">
-  <a class="brand" href="#briefing" aria-label="PABS Simulation home"><span class="brand-mark">P</span><span>PABS<span class="brand-light"> Simulation</span><small>FROM NEGOTIATION TO CONSEQUENCE</small></span></a>
-  <div class="workspace-label">YOUR WORKSPACE</div>
-  <nav class="main-nav" aria-label="Main views">
-    <button data-view="briefing" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Ministerial briefing<span>01</span></button>
-    <button data-view="compare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V9h5v11M14 20V4h5v16M3 20h18"/></svg>Compare packages<span>02</span></button>
-    <button data-view="package"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></svg>Negotiating package<span>03</span></button>
-    <button data-view="evidence"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4ZM20 4h-4a3 3 0 0 0-3 3M13 21a4 4 0 0 1 4-2h3V4"/></svg>Evidence & assumptions<span>04</span></button>
-  </nav>
-  <div class="sidebar-note"><span class="small-rule"></span><p>A clearer view of<br>the national interest.</p><small>Explore the gains, commitments<br>and conditions behind a package.</small></div>
-  <div class="sidebar-bottom"><span class="demo-dot"></span>INTERACTIVE DEMO<small>Version 2 · Design review</small><a href="video-graphics/">View the video graphics <span aria-hidden="true">↗</span></a></div>
-</aside>
-<div class="workspace">
-  <header class="topbar"><div class="breadcrumb">PABS Simulation <span>/</span> <strong id="breadcrumb-view">Ministerial briefing</strong></div><div class="top-actions"><span id="save-state" class="save-state">Changes stay on this device</span><button class="button quiet" id="present-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18M5 4v12h14V4M12 16v5M8 21h8"/></svg>Present</button><button class="button outline" id="print-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 16H4V9h16v7h-3M7 13h10v8H7Z"/></svg>Print brief</button></div></header>
-  <main id="main" tabindex="-1">
-    <div class="demo-notice"><span class="notice-label">DESIGN DEMO</span><span>Fictional figures for discussion. No country forecast or negotiated offer.</span><button class="text-button" data-go="evidence">See assumptions <span aria-hidden="true">↗</span></button></div>
-    <div class="page-heading"><div><p class="eyebrow">PAKISTAN · MINISTERIAL WORKSPACE</p><h1 id="page-title">Pakistan’s national interest.</h1><p class="heading-intro" id="page-description">What could this package mean for access, protection and public expenditure?</p></div><div class="package-picker"><label for="package-select">PACKAGE UNDER CONSIDERATION</label><select id="package-select"></select><span id="custom-note">An illustrative package, ready to explore</span></div></div>
-    <div class="context-bar"><span><small>OUTBREAK</small>COVID-type pandemic</span><span><small>PRODUCT</small>Vaccine · two-dose regimen</span><span><small>COMPARED WITH</small><span id="context-comparison">Illustrative current arrangements</span></span><label for="horizon-select"><small>TIME HORIZON</small><select id="horizon-select"><option value="3">First 3 months</option><option value="6" selected>First 6 months</option><option value="12">First 12 months</option></select></label></div>
-    <section id="view-briefing" class="view" aria-labelledby="page-title">
-      <div class="metrics" aria-label="Four measures of national interest">
-        <article class="metric"><div class="metric-top"><span>First usable delivery</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></div><div class="metric-value" id="arrival-value"></div><div class="metric-delta" id="arrival-delta"></div><p>After the common authorization trigger</p></article>
-        <article class="metric"><div class="metric-top"><span>Priority population covered</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6M19 20v-3a6 6 0 0 0-2-4"/></svg></div><div class="metric-value" id="coverage-value"></div><div class="metric-delta" id="coverage-delta"></div><p id="coverage-caption"></p></article>
-        <article class="metric"><div class="metric-top"><span>Cost per complete regimen</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M15 8h-4a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4H9M12 6v12"/></svg></div><div class="metric-value" id="cost-value"></div><div class="metric-delta" id="cost-delta"></div><p>Procurement, delivery & implementation</p></article>
-        <article class="metric conditions-metric"><div class="metric-top"><span>Access conditions</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6ZM12 8v5M12 16h.01"/></svg></div><div class="metric-value condition-value" id="conditions-value">Conditional</div><button class="metric-delta text-button" data-go="evidence">Review the delivery assumptions ↗</button><p>Allocation, supply & national readiness</p></article>
+<a class="skip-link" href="#workspace-main">Skip to workspace</a>
+
+<header class="disclosure-bar" role="region" aria-label="Model architecture and privacy notice">
+  <div class="disclosure-inner">
+    <span class="disclosure-pill">A79/8 + OWID Empirical Baseline</span>
+    <p><strong>Strict boundary:</strong> Every dose, coverage trajectory, uptake curve and bloc score is computed deterministically in your browser (<a href="./model.mjs" target="_blank" rel="noopener">model.mjs</a>). The Gemini 2.5 Flash copilot reads draft text, cites clauses, flags out-of-scope language, and drafts bridging prose grounded in those numbers.</p>
+    <div class="disclosure-links">
+      <a href="../index.html">All versions</a>
+      <a href="../app/index.html">Negotiator v1</a>
+      <a href="../minister/index.html">Minister v1</a>
+      <a href="../proposal/index.html">Slide 8 Proposal</a>
+    </div>
+  </div>
+</header>
+
+<div class="workspace-shell">
+  <aside class="sidebar" aria-label="Workspace controls and views">
+    <div class="brand-block">
+      <p class="eyebrow">WHO Pandemic Agreement · PABS Annex</p>
+      <h1>Ministerial &amp; Negotiator Workspace</h1>
+      <p class="brand-sub">Unified clause simulator, 217-country COVID-2 benchmark &amp; “Today’s Text” agentic prototype.</p>
+    </div>
+
+    <section class="context-card" aria-label="Delegation and scenario selectors">
+      <div class="field-group">
+        <label class="eyebrow" for="country-select">Country delegation (217 OWID)</label>
+        <select id="country-select" class="control-select"></select>
       </div>
-      <div class="assessment"><div class="assessment-marker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-6 4 3 6-9M14 5h6v6"/></svg></div><div><span class="eyebrow">PACKAGE AT A GLANCE</span><h2 id="assessment-title"></h2><p id="assessment-description"></p></div><button class="text-button" data-go="package">Explore the terms <span aria-hidden="true">→</span></button></div>
-      <div class="analysis-grid"><article class="chart-panel"><div class="section-head"><div><p class="eyebrow">ACCESS OVER TIME</p><h2>Coverage during the initial response</h2></div><span class="chart-unit">Complete regimens · % of priority population</span></div><div class="chart-legend"><span><i></i><b id="chart-package-name"></b></span><span><i class="baseline"></i>Current arrangements</span></div><div id="coverage-chart" class="coverage-chart"></div><p class="figure-note">Same fictional population of 10 million people, outbreak and regimen. Day 0 is a common first product authorization.</p><details class="chart-data"><summary>View chart values as a table</summary><div id="chart-table"></div></details></article><aside class="conditions-panel"><div class="section-head"><div><p class="eyebrow">BEFORE A DECISION</p><h2>Questions to resolve</h2></div><span class="outlined-number">03</span></div><ol id="conditions-list"></ol><button class="text-button" data-go="evidence">Open evidence & assumptions <span aria-hidden="true">→</span></button></aside></div>
-      <div class="tradeoff-grid"><article><span class="section-index">01 / POTENTIAL GAINS</span><h3>What the country could receive</h3><p id="gains-copy"></p></article><article><span class="section-index">02 / NATIONAL COMMITMENTS</span><h3>What the country would need to do</h3><p id="commitments-copy"></p></article><article><span class="section-index">03 / FISCAL CONTEXT</span><h3>Keep the spending target visible</h3><p id="fiscal-copy"></p></article></div>
-      <div class="next-step"><span>See the trade-offs behind these figures.</span><button class="button primary" data-go="compare">Compare packages <span aria-hidden="true">→</span></button></div>
+      <div class="field-row-2">
+        <div class="field-group">
+          <label class="eyebrow" for="bloc-select">Aligned bloc</label>
+          <select id="bloc-select" class="control-select"></select>
+        </div>
+        <div class="field-group">
+          <label class="eyebrow" for="scenario-select">Outbreak scenario</label>
+          <select id="scenario-select" class="control-select"></select>
+        </div>
+      </div>
+      <div class="context-meta" id="delegation-meta"></div>
     </section>
-    <section id="view-compare" class="view" aria-labelledby="page-title" hidden><div class="section-intro"><div><p class="eyebrow">A COMMON BASIS FOR COMPARISON</p><h2>What changes between the packages?</h2><p>The same outbreak, population, regimen and time horizon apply throughout.</p></div><label class="compare-picker" for="compare-select">COMPARE SELECTED PACKAGE WITH<select id="compare-select"></select></label></div><div id="comparison-insight" class="comparison-insight"></div><div class="table-wrap"><table class="comparison-table" id="comparison-table"></table></div><div class="cost-explainer"><span class="outlined-number">i</span><p><strong>Compare expenditure at the same service target.</strong> The table includes the cost to supply one million complete regimens. Total spending on the modeled coverage can rise when more people are protected.</p></div><div class="section-head terms-head"><div><p class="eyebrow">THE NEGOTIATING TRADE-OFF</p><h2>Terms that differ</h2></div><button class="button outline" data-go="package">Edit this package →</button></div><div id="changed-terms"></div></section>
-    <section id="view-package" class="view" aria-labelledby="page-title" hidden><div class="section-intro"><div><p class="eyebrow">ILLUSTRATIVE PACKAGE EXERCISE</p><h2>Seven choices. One coherent package.</h2><p>Open a term to explore alternatives. Figures update across the entire demo.</p></div><div class="editor-actions"><button class="button outline" id="undo-button" disabled>Undo edit</button><button class="button quiet" id="reset-button">Reset to balanced access</button></div></div><div class="editor-layout"><div id="terms-editor"></div><aside class="editor-summary"><p class="eyebrow">YOUR PACKAGE</p><h3 id="editor-name"></h3><dl id="editor-metrics"></dl><p class="figure-note">These seven simplified controls demonstrate the new interface. They are not a clause-by-clause implementation of the existing simulator.</p><button class="button primary" data-go="briefing">View the briefing →</button><button class="button outline full-width" id="save-button">Save draft on this device</button><span id="editor-save-status" class="figure-note"></span></aside></div><div class="file-tools"><div><h3>Keep a reproducible copy</h3><p>A download includes all seven terms, the horizon, comparison and demo version.</p></div><div><button class="button outline" id="export-button">Download analysis</button><button class="button quiet" id="import-button">Open analysis</button><input type="file" id="import-file" accept="application/json,.json" hidden></div></div></section>
-    <section id="view-evidence" class="view" aria-labelledby="page-title" hidden><div class="section-intro"><div><p class="eyebrow">TRANSPARENCY BY DESIGN</p><h2>Know what sits behind each result.</h2><p>Every number in this demo is fictional. None is a forecast or an offer to Pakistan.</p></div><span class="version-tag" id="model-version"></span></div><div class="evidence-overview"><div><span class="status-tag">ILLUSTRATIVE INPUT</span><h3>A design exercise</h3><p>The population, delivery dates, coverage curves and costs were created to demonstrate the proposed experience. They do not come from the existing simulation or a validated country model.</p></div><div><span class="status-tag neutral">REQUIRES REVIEW</span><h3>A future country pilot</h3><p>Real use requires sourced observations, an agreed allocation rule, eligibility, available supply, delivery capacity and independent review of the model.</p></div></div><div id="assumptions-list" class="assumptions-list"></div><div class="section-head terms-head"><div><p class="eyebrow">HOW THE DEMO WORKS</p><h2>Clear definitions, visible limits</h2></div></div><div class="definition-grid"><article><h3>Access is conditional</h3><p>Global pooled supply does not create an automatic country entitlement. The demo does not establish treaty compliance, legal obligations or political acceptance.</p></article><article><h3>Local draft storage</h3><p>Saving uses this browser’s local storage. No account or server is involved. A downloaded analysis is readable JSON and contains no personal notes.</p><button class="text-button" id="clear-button">Clear the saved demo draft</button></article><article><h3>What remains to build</h3><p>A shared validated calculation engine, documented country data, realistic allocation and delivery models, and specialist review before decision use.</p></article></div></section>
-    <footer><div class="footer-brand">PABS Simulation <span>Independent discussion tool</span></div><p>No WHO affiliation or endorsement. Fictional demo · Not validated.</p><span id="footer-version">DEMO 2.0</span></footer>
+
+    <nav class="view-nav" role="tablist" aria-label="Workspace views">
+      <button type="button" role="tab" class="view-tab" id="tab-briefing" data-view="briefing" aria-selected="true" aria-controls="view-briefing">
+        <span class="step-index">01</span>
+        <span>
+          <strong>Ministerial briefing</strong>
+          <small>Country COVID-2 curve, KPIs &amp; Cabinet memo</small>
+        </span>
+      </button>
+      <button type="button" role="tab" class="view-tab" id="tab-agent" data-view="agent" aria-selected="false" aria-controls="view-agent">
+        <span class="step-index">02</span>
+        <span>
+          <strong>Today’s text · Agent</strong>
+          <small>Read bracketed text, cite &amp; map to levers</small>
+        </span>
+      </button>
+      <button type="button" role="tab" class="view-tab" id="tab-package" data-view="package" aria-selected="false" aria-controls="view-package">
+        <span class="step-index">03</span>
+        <span>
+          <strong>Negotiating package</strong>
+          <small>7 contested issues, 6 secondary levers &amp; curve</small>
+        </span>
+      </button>
+      <button type="button" role="tab" class="view-tab" id="tab-compare" data-view="compare" aria-selected="false" aria-controls="view-compare">
+        <span class="step-index">04</span>
+        <span>
+          <strong>Compare &amp; Trade finder</strong>
+          <small>Waterfall diff, bridging search &amp; clause drafter</small>
+        </span>
+      </button>
+      <button type="button" role="tab" class="view-tab" id="tab-blocs" data-view="blocs" aria-selected="false" aria-controls="view-blocs">
+        <span class="step-index">05</span>
+        <span>
+          <strong>Blocs, weights &amp; evidence</strong>
+          <small>Priority weights, hardline test &amp; share codes</small>
+        </span>
+      </button>
+    </nav>
+
+    <section class="sidebar-presets" aria-label="Quick package presets">
+      <div class="sidebar-section-head">
+        <span class="eyebrow">Active package preset</span>
+        <span class="mono-badge" id="active-preset-badge">30 Apr text</span>
+      </div>
+      <div class="preset-chip-grid" id="sidebar-preset-buttons"></div>
+    </section>
+
+    <section class="agent-status-box" aria-label="Gemini agent connection">
+      <div class="agent-status-row">
+        <span class="status-dot" id="agent-status-dot"></span>
+        <div class="agent-status-copy">
+          <strong id="agent-status-title">Gemini 2.5 Flash Copilot</strong>
+          <small id="agent-status-sub">Checking agent status…</small>
+        </div>
+        <button type="button" class="mini-button" id="open-key-modal">API Key</button>
+      </div>
+      <div class="key-drawer" id="key-drawer" hidden>
+        <label class="eyebrow" for="browser-api-key">Optional Gemini API key (session only)</label>
+        <input type="password" id="browser-api-key" placeholder="AIzaSy… (or use .env in server.mjs)" autocomplete="off">
+        <div class="key-drawer-actions">
+          <button type="button" class="action-button primary-action" id="save-api-key">Save key</button>
+          <button type="button" class="action-button" id="clear-api-key">Clear</button>
+        </div>
+        <p class="tiny-note">Stored only in browser <code>sessionStorage</code>. Without a key, the workspace uses pre-verified A79/8 citations &amp; deterministic templates.</p>
+      </div>
+    </section>
+
+    <section class="sidebar-actions" aria-label="Save and load workspace">
+      <p class="eyebrow">Portability &amp; snapshots</p>
+      <div class="action-stack">
+        <button type="button" class="action-button" id="save-snapshot">Export workspace JSON</button>
+        <button type="button" class="action-button" id="load-snapshot-trigger">Import workspace JSON</button>
+        <input type="file" id="load-snapshot-input" accept="application/json,.json" hidden>
+        <button type="button" class="action-button" id="reset-workspace">Reset to 30 Apr baseline</button>
+      </div>
+      <p class="status-line" id="status-line" role="status" aria-live="polite">Loaded empirical OWID baseline + A79/8 clause engine.</p>
+    </section>
+  </aside>
+
+  <main class="workspace-main" id="workspace-main">
+    <!-- Persistent Top Summary Strip across all views -->
+    <section class="summary-strip" aria-label="Live package verdict and national impact strip">
+      <div class="strip-item strip-verdict" id="strip-verdict-box">
+        <span class="eyebrow">Parties’ verdict (4 state blocs)</span>
+        <strong id="strip-verdict-title">Not signable yet</strong>
+        <small id="strip-verdict-sub">Lowest Party: 0/100</small>
+      </div>
+      <div class="strip-item">
+        <span class="eyebrow" id="strip-country-label">Pakistan PABS supply (24m)</span>
+        <strong class="num" id="strip-country-doses">—</strong>
+        <small id="strip-country-sub">free + not-for-profit via WHO</small>
+      </div>
+      <div class="strip-item">
+        <span class="eyebrow">6-month coverage (Jun 2021)</span>
+        <strong class="num" id="strip-cov6">—</strong>
+        <small id="strip-cov6-sub">vs actual COVID-19</small>
+      </div>
+      <div class="strip-item">
+        <span class="eyebrow" id="strip-scen-label">Global doses to WHO (COVID-type)</span>
+        <strong class="num" id="strip-global-doses">—</strong>
+        <small id="strip-uptake-sub">Manufacturer uptake: —</small>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 01: MINISTERIAL BRIEFING (COUNTRY COVID-2 + CABINET COPILOT)
+         ==================================================================== -->
+    <section class="view-panel" id="view-briefing" role="tabpanel" aria-labelledby="tab-briefing">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow" id="briefing-eyebrow">01 · Ministerial Briefing · Pakistan (Group for Equity)</p>
+          <h2 id="briefing-title">If a COVID-2 hits tomorrow, what does this PABS text deliver to Pakistan?</h2>
+        </div>
+        <div class="preset-bar" id="briefing-preset-bar" aria-label="Test negotiating packages"></div>
+      </div>
+
+      <div class="kpi-grid-4" id="briefing-kpis" aria-label="National and multilateral indicators"></div>
+
+      <div class="briefing-two-col">
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Empirical COVID-19 record vs. modeled COVID-2 rollout</p>
+              <h3 id="chart-country-heading">Population vaccine coverage over 24 months (Dec 2020 – Dec 2022)</h3>
+            </div>
+            <div class="horizon-pills" role="group" aria-label="Highlight milestone month">
+              <button type="button" class="horizon-pill" data-month="6">6m (Jun 2021)</button>
+              <button type="button" class="horizon-pill is-active" data-month="12">12m (Dec 2021)</button>
+              <button type="button" class="horizon-pill" data-month="24">24m (Dec 2022)</button>
+            </div>
+          </div>
+          <div class="chart-frame" id="country-covid2-chart"></div>
+          <div class="chart-caption" id="country-chart-caption"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">The two-signature test</p>
+              <h3>Why neither pure voluntarism nor a maximalist text delivers</h3>
+            </div>
+          </div>
+          <div class="bloc-mini-list" id="briefing-bloc-meters"></div>
+          <div class="redline-banner" id="briefing-redlines"></div>
+          <div class="hardline-callout" id="briefing-tradeoff-note"></div>
+          <div class="inline-actions">
+            <button type="button" class="action-button primary-action" data-goto-view="agent">Read today’s room text (Slide 8 Agent)</button>
+            <button type="button" class="action-button" data-goto-view="compare">Find bridging trades</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Gemini Workflow 3: Ministerial Brief & Defensive Q&A Synthesizer -->
+      <article class="panel-card agent-card">
+        <div class="panel-header">
+          <div>
+            <div class="agent-badge-row">
+              <span class="agent-pill">Gemini Copilot · Workflow 3</span>
+              <span class="mono-badge" id="brief-agent-source">Grounded in deterministic model.mjs</span>
+            </div>
+            <h3>Cabinet Ministerial Memo, IGWG Plenary Intervention &amp; Defensive Q&amp;A</h3>
+            <p class="muted-copy">Synthesizes talking points for your selected country and bloc strictly from the deterministic figures above. Zero hallucinated numbers.</p>
+          </div>
+          <div class="header-actions">
+            <button type="button" class="action-button primary-action" id="generate-ministerial-brief">Synthesize / Refresh Brief</button>
+            <button type="button" class="action-button" id="copy-ministerial-brief">Copy full memo</button>
+          </div>
+        </div>
+        <div id="ministerial-brief-output" class="agent-brief-grid"></div>
+      </article>
+
+      <!-- Country Political & Negotiation Record -->
+      <details class="panel-card details-card" id="country-record-details" open>
+        <summary>
+          <div>
+            <span class="eyebrow" id="country-record-eyebrow">Empirical baseline &amp; negotiation record</span>
+            <h3 id="country-record-title">Pakistan in COVID-19 and in the PABS Annex negotiations</h3>
+          </div>
+          <span class="summary-toggle-label">Toggle record</span>
+        </summary>
+        <div class="country-context-body" id="country-context-body"></div>
+      </details>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 02: TODAY'S TEXT · AGENT (SLIDE 8 WORKFLOW)
+         ==================================================================== -->
+    <section class="view-panel" id="view-agent" role="tabpanel" aria-labelledby="tab-agent" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 · “Today’s Text” Agentic Prototype (Slide 8 Architecture)</p>
+          <h2>Load a bracketed room draft: cited clause mapping, out-of-scope register &amp; delegation review</h2>
+        </div>
+      </div>
+
+      <div class="architecture-flow" aria-label="Four-step agentic workflow">
+        <div class="flow-step">
+          <span class="flow-num">STEP 1</span>
+          <strong>Load room text</strong>
+          <small>Pick an A79/8 or room draft, or paste bracketed annex paragraphs.</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">STEP 2</span>
+          <strong>Cited mapping &amp; review</strong>
+          <small>Gemini extracts verbatim quotes &amp; maps 7 issues + 6 levers; you can override any row.</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">STEP 3</span>
+          <strong>Out-of-scope register</strong>
+          <small>Flags governance, CFM, or dispute clauses outside the 13 quantitative levers.</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">STEP 4</span>
+          <strong>Deterministic engine</strong>
+          <small><code>model.mjs</code> computes doses, uptake, country coverage &amp; bloc scores.</small>
+        </div>
+      </div>
+
+      <div class="agent-input-grid">
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Sample negotiating texts or custom room draft</p>
+              <h3>Select a reference draft or paste bracketed PABS Annex text</h3>
+            </div>
+            <span class="mono-badge" id="sample-source-badge">WHO Document A79/8</span>
+          </div>
+          <div class="sample-buttons" id="sample-text-buttons" role="group" aria-label="Sample negotiating drafts"></div>
+          <p class="muted-copy" id="sample-text-desc"></p>
+          <label class="sr-only" for="draft-text-input">Negotiating text to analyze</label>
+          <textarea id="draft-text-input" class="draft-textarea" rows="11" placeholder="Paste draft PABS Annex paragraphs or bracketed room text here…"></textarea>
+          <div class="inline-actions">
+            <button type="button" class="action-button primary-action" id="run-text-agent">Analyze draft text &amp; map clauses</button>
+            <span class="mono-badge" id="text-agent-source-tag">Ready</span>
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 4 · Deterministic preview of mapped text</p>
+              <h3>What the mapped draft produces vs. your current workspace package</h3>
+            </div>
+          </div>
+          <div id="agent-diff-preview"></div>
+          <div class="inline-actions" style="margin-top:14px">
+            <button type="button" class="action-button primary-action" id="apply-mapped-package">Apply mapped positions to workspace</button>
+            <button type="button" class="action-button" id="apply-mapped-and-view">Apply &amp; open Package builder →</button>
+          </div>
+        </article>
+      </div>
+
+      <article class="panel-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Step 2 · Cited Clause-to-Lever Mapping (Human-in-the-loop review)</p>
+            <h3>7 Core Contested Issues — Verbatim Quotes, Citations &amp; Delegation Override</h3>
+          </div>
+          <p class="muted-copy">Review each cited mapping below. Change any dropdown if your delegation reads a bracketed paragraph differently; the deterministic preview updates immediately.</p>
+        </div>
+        <div class="table-scroll">
+          <table class="agent-mapping-table" id="agent-issues-table"></table>
+        </div>
+      </article>
+
+      <div class="briefing-two-col">
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 2B · Secondary Annex Provisions</p>
+              <h3>6 Secondary Levers (Scope, Timing, IP, Pandemic Target, Export Shield, Governance)</h3>
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table class="agent-mapping-table" id="agent-secondary-table"></table>
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 3 · Explicit “Outside Model Scope” Register</p>
+              <h3>Provisions in the text that the quantitative model does not score</h3>
+            </div>
+          </div>
+          <p class="muted-copy">Honest models state their boundaries. These clauses are detected in the text and held for legal/diplomatic review; click <strong>Attach to package notes</strong> to preserve them in your brief.</p>
+          <div id="agent-out-of-scope-list" class="oos-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 03: NEGOTIATING PACKAGE (7 CORE ISSUES + 6 SECONDARY + CURVE)
+         ==================================================================== -->
+    <section class="view-panel" id="view-package" role="tabpanel" aria-labelledby="tab-package" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 · Clause-Level Negotiating Package Builder (A79/8 Term Sheet)</p>
+          <h2>Build a package across all 7 contested issues and test its consequences</h2>
+        </div>
+        <div class="preset-bar" id="package-preset-bar" aria-label="Load preset package"></div>
+      </div>
+
+      <div class="package-builder-grid">
+        <div class="package-left-col">
+          <div id="issues-builder-list" class="issues-stack"></div>
+
+          <details class="panel-card details-card" id="secondary-provisions-card" open>
+            <summary>
+              <div>
+                <span class="eyebrow">Secondary provisions in the package</span>
+                <h3>Scope, sharing speed, IP waiver, pandemic remainder, export shield &amp; governance</h3>
+              </div>
+              <span class="summary-toggle-label">6 levers</span>
+            </summary>
+            <div id="secondary-builder-list" class="secondary-stack"></div>
+          </details>
+
+          <div class="panel-card save-package-bar">
+            <label for="save-pkg-name" class="eyebrow">Save this package for comparison</label>
+            <div class="save-package-controls">
+              <input type="text" id="save-pkg-name" placeholder="e.g. EMRO / Pakistan Coordinator Draft, 4 Nov">
+              <button type="button" class="action-button primary-action" id="save-pkg-btn">Save package</button>
+            </div>
+            <span class="muted-copy" id="save-pkg-msg"></span>
+          </div>
+        </div>
+
+        <aside class="package-right-rail" aria-label="Live package verdict and participation curve">
+          <div class="panel-card verdict-card" id="pkg-verdict-card"></div>
+
+          <div class="panel-card">
+            <span class="eyebrow">Outbreak scenario</span>
+            <div class="scenario-btn-grid" id="pkg-scenario-buttons"></div>
+            <p class="muted-copy" id="pkg-scenario-desc" style="margin-top:8px"></p>
+          </div>
+
+          <div class="panel-card">
+            <span class="eyebrow">Global &amp; national consequences</span>
+            <div class="rail-kpis" id="pkg-rail-kpis"></div>
+          </div>
+
+          <div class="panel-card">
+            <div class="rail-head-between">
+              <span class="eyebrow">Where each bloc lands</span>
+              <span class="mono-badge" id="pkg-thr-label">line = 50/100</span>
+            </div>
+            <div class="bloc-mini-list" id="pkg-bloc-meters"></div>
+            <div class="redline-banner" id="pkg-redlines"></div>
+          </div>
+
+          <div class="panel-card">
+            <span class="eyebrow">The participation curve</span>
+            <div id="pkg-participation-curve" style="margin-top:6px"></div>
+            <div class="curve-callout" id="pkg-curve-msg"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 04: COMPARE & TRADE FINDER (+ BRIDGING CLAUSE COPILOT)
+         ==================================================================== -->
+    <section class="view-panel" id="view-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">04 · Package Comparison Waterfall, Trade Finder &amp; Bridging Clause Copilot</p>
+          <h2>Compare drafts issue-by-issue, search for signable trades &amp; draft annex wording</h2>
+        </div>
+      </div>
+
+      <!-- Part A: Compare two packages -->
+      <article class="panel-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Side-by-side comparison &amp; issue waterfall</p>
+            <h3>Which issue moves doses and Party acceptance between Package A and Package B?</h3>
+          </div>
+          <div class="compare-selectors">
+            <label class="eyebrow">Package A <select id="cmp-select-a" class="control-select"></select></label>
+            <label class="eyebrow">Package B <select id="cmp-select-b" class="control-select"></select></label>
+          </div>
+        </div>
+
+        <div class="briefing-two-col">
+          <div>
+            <span class="eyebrow">Positions across the 7 key issues</span>
+            <div class="table-scroll" style="margin-top:6px">
+              <table class="data-table" id="cmp-positions-table"></table>
+            </div>
+          </div>
+          <div>
+            <span class="eyebrow">Deterministic outcomes &amp; bloc scores</span>
+            <div class="table-scroll" style="margin-top:6px">
+              <table class="data-table" id="cmp-results-table"></table>
+            </div>
+            <span class="eyebrow" style="display:block;margin:14px 0 6px">Issue-by-issue waterfall (moving A → B in order)</span>
+            <div class="waterfall-box" id="cmp-waterfall"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Part B: Trade Finder + Bridging Clause Drafter Copilot -->
+      <div class="briefing-two-col">
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Deterministic coordinate-ascent Trade Finder</p>
+              <h3>Find the bridging package from your current draft</h3>
+            </div>
+          </div>
+          <p class="muted-copy">Starting from your active package, the finder searches across all 7 issues and 6 secondary provisions for the combination that lifts the least satisfied Party furthest while respecting every coded red line and keeping doses above your floor.</p>
+          <div class="trade-controls-row">
+            <label class="eyebrow" for="trade-floor-input">Dose floor (% of starting package)</label>
+            <input type="number" id="trade-floor-input" value="80" min="0" max="200" step="5" class="number-input">
+            <button type="button" class="action-button primary-action" id="run-trade-finder">Find bridging trades</button>
+          </div>
+          <div id="trade-summary-box"></div>
+          <div id="trade-moves-list" class="trade-moves-stack"></div>
+        </article>
+
+        <article class="panel-card agent-card">
+          <div class="panel-header">
+            <div>
+              <div class="agent-badge-row">
+                <span class="agent-pill">Gemini Copilot · Workflow 2</span>
+                <span class="mono-badge" id="clause-drafter-source">A79/8 Legal Drafter</span>
+              </div>
+              <h3>Bridging Clause Drafter &amp; Bilateral Talking Points</h3>
+              <p class="muted-copy">Click <strong>Draft treaty clause</strong> on any proposed trade move to generate diplomat-ready A79/8 annex wording, a bracketed room fallback, and tailored pitches for both poles.</p>
+            </div>
+          </div>
+          <div id="bridging-clause-output"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 05: BLOCS, WEIGHTS & EVIDENCE (HARDLINE TEST, METHOD & SHARE)
+         ==================================================================== -->
+    <section class="view-panel" id="view-blocs" role="tabpanel" aria-labelledby="tab-blocs" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">05 · Bloc Priorities, Hardline Test, Method Parameters &amp; Share Codes</p>
+          <h2>Inspect every assumption, test the cost of any bloc’s hardline, and share your package</h2>
+        </div>
+      </div>
+
+      <article class="panel-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Editable priority weights (1 = low, 2 = medium, 3 = high)</p>
+            <h3>How much each issue matters to each negotiating bloc</h3>
+          </div>
+          <button type="button" class="action-button" id="reset-weights-btn">Reset weights to public-statement baseline</button>
+        </div>
+        <p class="muted-copy">Coordinators know their own bloc best: adjust any weight and every verdict, trade search and country brief updates immediately. Secondary provisions carry weight 0.5 each. Only Parties (the four state blocs: EQ, AF, EU, G6) decide whether the annex is signable.</p>
+        <div class="table-scroll" style="margin-top:10px">
+          <table class="data-table weights-table" id="weights-matrix-table"></table>
+        </div>
+      </article>
+
+      <div class="briefing-two-col">
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Goal 4 · Show every bloc the cost of its hardline</p>
+              <h3>What happens if one bloc wins every single issue?</h3>
+            </div>
+            <label class="eyebrow">Test bloc <select id="hardline-bloc-select" class="control-select"></select></label>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table" id="hardline-table"></table>
+          </div>
+          <div class="hardline-callout" id="hardline-callout" style="margin-top:12px"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Model parameters &amp; sensitivity controls</p>
+              <h3>Participation equation &amp; adjustable parameters</h3>
+            </div>
+            <button type="button" class="action-button" id="reset-assumptions-btn">Reset parameters</button>
+          </div>
+          <pre class="formula-box">participation = 0.95 × (0.3 + 0.7 × leverage) / (1 + e^((burden − tolerance)/0.06))
+doses to WHO  = participation × production × (donated% + affordable%) × delivery + licensed
+country COVID-2 cov(m) = min(90%, cov_2021(m) + 100 × (WORLD_CUM(m) × whoShare × pop/POOL) / pop)</pre>
+          <div class="sliders-grid">
+            <label class="slider-label">
+              <span class="eyebrow">Industry burden tolerance (<span id="val-tol" class="num">0.22</span>)</span>
+              <input type="range" id="slider-tol" min="0.10" max="0.40" step="0.01" value="0.22">
+            </label>
+            <label class="slider-label">
+              <span class="eyebrow">Margin given up, affordable tranche (<span id="val-m" class="num">50%</span>)</span>
+              <input type="range" id="slider-m" min="0" max="1" step="0.05" value="0.50">
+            </label>
+            <label class="slider-label">
+              <span class="eyebrow">Lives benchmark per 1,000 timely doses (<span id="val-bench" class="num">1.0</span>)</span>
+              <input type="range" id="slider-bench" min="0.3" max="3" step="0.1" value="1.0">
+            </label>
+            <label class="slider-label">
+              <span class="eyebrow">Party acceptance threshold (<span id="val-thr" class="num">50</span>/100)</span>
+              <input type="range" id="slider-thr" min="30" max="70" step="1" value="50">
+            </label>
+          </div>
+        </article>
+      </div>
+
+      <div class="briefing-two-col">
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Plain-text brief for capital or coordination meetings</p>
+              <h3>Copyable delegation brief</h3>
+            </div>
+            <button type="button" class="action-button primary-action" id="copy-plain-brief">Copy brief text</button>
+          </div>
+          <pre class="code-block" id="plain-brief-box"></pre>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Anonymous package share code (compatible with Negotiator v1)</p>
+              <h3>Pass a package inside your bloc</h3>
+            </div>
+            <button type="button" class="action-button" id="copy-pkg-code">Copy share code</button>
+          </div>
+          <pre class="code-block" id="pkg-share-code-box"></pre>
+          <label for="import-pkg-code-input" class="eyebrow" style="display:block;margin-top:12px">Paste a colleague’s package code to load</label>
+          <textarea id="import-pkg-code-input" class="code-textarea" rows="3" placeholder="Paste base64 package code here…"></textarea>
+          <div class="inline-actions" style="margin-top:8px">
+            <button type="button" class="action-button primary-action" id="import-pkg-code-btn">Load package code</button>
+            <span class="muted-copy" id="import-pkg-code-msg"></span>
+          </div>
+        </article>
+      </div>
+
+      <div class="briefing-two-col">
+        <article class="panel-card">
+          <p class="eyebrow">Blocs as coded from public IGWG statements</p>
+          <div class="table-scroll" style="margin-top:8px">
+            <table class="data-table" id="coded-blocs-table"></table>
+          </div>
+        </article>
+        <article class="panel-card">
+          <p class="eyebrow">Scenario inputs &amp; primary sources</p>
+          <div class="table-scroll" style="margin:8px 0 14px">
+            <table class="data-table" id="scenarios-ref-table"></table>
+          </div>
+          <ul class="sources-list" id="sources-ref-list"></ul>
+        </article>
+      </div>
+    </section>
   </main>
 </div>
-<button id="exit-presentation" class="button primary" hidden>Exit presentation <span>Esc</span></button>
-<div id="toast" role="status" aria-live="polite"></div><div class="sr-only" role="status" aria-live="polite" id="result-announcement"></div>
-<noscript><p class="noscript">Enable JavaScript to explore the interactive demo. All displayed figures are fictional.</p></noscript>
-</body></html>
+
+<script type="module" src="./demo.mjs"></script>
+</body>
+</html>

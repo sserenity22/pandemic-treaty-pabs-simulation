@@ -1,32 +1,43 @@
-# PABS ministerial demo v2
+# PABS Unified Ministerial & Negotiator Workspace (`demo-v2`) · Gemini 2.5 Flash "Today's Text" Prototype
 
-Separate design-review demo, created 24 October 2026. The original app, minister brief and published site are unchanged.
+Unified Ministerial & Negotiator workspace built on the `demo-v2` layout, combining:
+1. **The empirical 217-country Ministerial Brief engine** (`country-data.mjs` + `covid2()` trajectory model) with Pakistan (`PAK`) as the worked deep-dive example (`PK_CONTEXT`).
+2. **The full clause-level PABS simulation engine** (`model.mjs`) covering the **7 core Annex issues** (`share`, `price`, `fin`, `scope`, `trig`, `gov`, `link`), **6 secondary operational levers** (`liability`, `ip`, `exclusivity`, `traceability`, `surveillance`, `duration`), **4 outbreak scenarios** (`covid`, `panflu`, `ebolalike`, `silent`), **6 negotiating groups** (`EQ`, `AF`, `EU`, `G6`, `IF`, `CS`), red-line vetoes, and the deterministic **Trade Finder** (`findTrades()`).
+3. **The 3-part Gemini 2.5 Flash Agentic Suite** (`agent.mjs`), implementing the Slide 8 *"Today's text"* workflow while keeping **all numerical calculations strictly inside the deterministic model**:
+   - **Workflow 1 · "Today's Text" Draft & Bracket Reader**: Reads pasted treaty drafts or bracketed IGWG A79/8 text, maps provisions to the 7 core issues (`a`/`b`/`c`) and 6 secondary levers (`0`/`1`/`2`) with verbatim quotes, confidence badges, bracket status, and an explicit **Outside Model Scope** register (`provisionsOutsideScope`), and lets the negotiator accept or override each mapping before applying to the live simulation.
+   - **Workflow 2 · Bridging Clause Drafter Copilot**: Turns deterministic 1-step or 2-step Trade Finder moves into diplomat-ready A79/8 annex wording (clean text + bracketed fallback) and bilateral talking points, with one-click insertion into package notes.
+   - **Workflow 3 · Ministerial Brief & Q&A Synthesizer**: Synthesizes country-tailored Cabinet briefing notes, 90-second IGWG plenary interventions, and 3 defensive parliamentary/press Q&As strictly grounded in the deterministic engine's numbers.
 
-To preview, serve the repository root from a local web server and open `/demo-v2/` and `/demo-v2/video-graphics/`.
+## Running the Workspace
 
-## Included
+### Option A: Zero-dependency Node server with optional `.env` Gemini proxy (Recommended)
+From `/Users/sserenity22/Google Deepmind Hackathon` or `/Users/sserenity22/Google Deepmind Hackathon/pandemic-treaty-pabs-simulation`:
+```bash
+node server.mjs
+```
+Then open:
+- `http://localhost:8787/demo-v2/` (Unified Ministerial & Negotiator Workspace)
+- `http://localhost:8787/` (Repository landing page)
 
-- Ministerial briefing with four national-interest measures
-- Consistent package comparisons and three horizons
-- Seven simplified interactive sample controls
-- Transparent fictional calculation assumptions
-- Browser-local draft saving and complete JSON snapshots
-- Presentation mode and print styling
-- Eight 1920x1080 video graphics in PNG and editable SVG, with original AI illustrations and prompts
+To use live `gemini-2.5-flash` calls via the local proxy, either:
+- Set `GEMINI_API_KEY=...` in `.env` (see `.env.example`), **or**
+- Click **Gemini key** in the top bar of `/demo-v2/` to store a key in browser `sessionStorage` for your current tab.
+- Without an API key, the workspace runs seamlessly using verified pre-computed / deterministic clause analysis and drafting fallbacks.
 
-All numerical inputs and outputs are fictional. Pakistan is a display context. This is an interaction prototype, not the rebuilt validated simulation; the existing clause-level engine is not connected.
+### Option B: Any static web server (or GitHub Pages)
+Serve the repository root with any static server (`python3 -m http.server 8000` or GitHub Pages) and open `/demo-v2/`.
 
-## Files
+## Architecture & Files
 
-`index.html`, `demo.css`, `demo.mjs`: interface.
-`model.mjs`: deterministic, explicitly fictional model and snapshot schema.
-`model-checks.mjs`: input-space invariants, horizon monotonicity and snapshot validation.
-`video-graphics/`: browsable finished graphics.
+- `index.html`, `demo.css`, `demo.mjs`: 5-view unified interface (`01 Ministerial briefing`, `02 Today's text · Agent`, `03 Negotiating package`, `04 Compare & Trade finder`, `05 Blocs, weights & evidence`).
+- `model.mjs`: Deterministic clause-level PABS simulation engine, `covid2()` trajectory calculator, `findTrades()` solver, and backwards-compatible `demo-v2` snapshot & evaluator exports.
+- `country-data.mjs`: Empirical COVID-19 vaccination curves (`MONTHS`, `WORLD_CUM`, `POOL`, `COUNTRY` for 217 countries from OWID/COVAX) and Pakistan negotiation context (`PK_CONTEXT`).
+- `agent.mjs`: Gemini 2.5 Flash client + structured schemas + sample bracketed texts + verified deterministic fallback engine.
+- `model-checks.mjs`: Automated verification suite covering both the 2,187-package `demo-v2` invariants and the full clause-level PABS engine, 217-country `covid2()` trajectories, `findTrades()`, and `agent.mjs` workflows.
+- `video-graphics/`: Eight 1920x1080 video graphics in PNG and editable SVG.
 
-## Checks
+## Running Automated Checks
 
-Run `node model-checks.mjs` for the model checks. Browser checks verified package changes, editing, draft restoration, horizon changes, comparison context and presentation keyboard focus. The native browser download event check stalled; automated download/reopen verification is incomplete. JSON serialization and parsing passed local roundtrip and malformed-input tests.
-
-No network dependencies, third-party fonts, accounts or analytics are used by the demo. Local storage is readable by other code served from the same origin; downloaded snapshots are readable JSON and contain no personal notes.
-
-Keep the stable version and backup until this demo has been reviewed. Do not publish it as a validated model.
+```bash
+node pandemic-treaty-pabs-simulation/demo-v2/model-checks.mjs
+```
